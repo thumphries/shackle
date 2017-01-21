@@ -1,0 +1,6 @@
+#!/bin/sh
+
+# Pull and re-export the metadata from a post
+
+if [ -z "$1" ]; then echo "Usage: $0 CONTENT"; exit 1; fi
+awk "/---/{x=\"${1}.\"i++;next}{print > x}" "$1"
