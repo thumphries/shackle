@@ -1,0 +1,6 @@
+<html>
+$(pwd)
+$(template templates/foo)
+$foo
+$(IFS=:; for f in $tags; do echo "$f"; done) # word splitting!
+</html>

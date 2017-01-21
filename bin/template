@@ -1,0 +1,6 @@
+#!/bin/sh -eu
+
+# Extraordinarily crude templating system
+
+if [ -z "$1" ]; then echo "Usage: $0 TEMPLATE"; exit 1; fi
+eval "$(partial "$1")"
