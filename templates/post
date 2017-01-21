@@ -1,0 +1,8 @@
+<h1>${title}</h1>
+<p>
+Tags:
+$(IFS=':'; for tag in $tags; do echo "<a href=\"tag/$(echo $tag | escape)\">$tag</a>"; done)
+</p>
+<div>
+${body}
+</div>
