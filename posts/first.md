@@ -1,6 +1,6 @@
 ---
 title="The first Shackle post!"
-tags="haskell:foo bar baz"
+tags="haskell:foo <bar> baz"
 draft=true
 ---
 

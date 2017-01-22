@@ -1,0 +1,17 @@
+#!/bin/sh
+
+# Source and export all metadata, then render the template.
+
+usage() {
+  echo "Usage: $0 METADATA BODY TEMPLATE"
+  exit 1
+}
+
+if [ -z "$1" ]; then usage; fi
+if [ -z "$2" ]; then usage; fi
+if [ -z "$3" ]; then usage; fi
+
+export $(cut -d= -f1 "$1")
+body="$(cat "$2")"
+export body
+template "$3"
