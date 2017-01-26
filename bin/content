@@ -1,0 +1,6 @@
+#!/bin/sh
+
+# Split out all the file's content.
+
+if [ -z "$1" ]; then echo "Usage: $0 CONTENT"; exit 1; fi
+awk "/---/{x=i++;next} x==\"1\" {print}" "$1"

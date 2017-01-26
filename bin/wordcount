@@ -1,0 +1,5 @@
+#!/bin/sh
+
+# Reformat the output to wc
+
+wc | awk '{print "nlines="$1}{print "nwords="$2}'

@@ -11,6 +11,12 @@ content transformation and metadata augmentation.
 It should trivially enable the use of user-supplied folds over
 metadata.
 
+## Usage
+
+It's a good idea to clear out your ENV before running.
+
+Something like `env -i PATH=./bin:$PATH make`.
+
 ## Why?
 
 Shackle should work out of the box on any of my machines

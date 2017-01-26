@@ -1,0 +1,7 @@
+#!/bin/sh
+
+# Shell escaping
+# http://stackoverflow.com/a/20053121
+
+LC_ALL=C
+sed -e "s/'/'\\\\''/g; 1s/^/'/; \$s/\$/'/"

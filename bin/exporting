@@ -1,0 +1,8 @@
+#!/bin/sh
+
+# Source and export all metadata from stdin.
+
+METAVARIABLES=$(cat)
+eval "$METAVARIABLES"
+export $(echo "$METAVARIABLES" | cut -d= -f1)
+eval "$@"

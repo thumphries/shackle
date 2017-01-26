@@ -1,0 +1,15 @@
+#!/bin/sh
+
+# Slurp a file and stash it as an ENV variable.
+
+usage() { echo "Usage: $0 VAR FILEPATH"; exit 1; }
+if [ -z "$1" ]; then usage; fi
+if [ -z "$2" ]; then usage; fi
+
+VAR="$1"
+CONTENTS=$(cat "$2" | shescape)
+eval "${VAR}=$CONTENTS"
+export ${VAR}
+shift
+shift
+eval "$@"
