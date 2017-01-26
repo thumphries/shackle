@@ -1,4 +1,11 @@
-all: dist/site/posts/first.html
+TEMPLATES=$(wildcard templates/*)
+POSTS_MD=$(wildcard posts/*.md)
+POSTS_MD_HTML=$(patsubst posts/%.md, dist/site/posts/%.html, $(POSTS_MD))
+
+all: dist/site/index.html
+
+dist/site/index.html: $(POSTS_MD_HTML)
+	echo "Hello, world!" > $@
 
 dist/site/posts:
 	mkdir -p "$@"
@@ -6,18 +13,16 @@ dist/site/posts:
 dist/meta/posts:
 	mkdir -p "$@"
 
-dist/site/posts/first.html: templates/post posts/first.md dist/meta/posts/first.meta dist/meta/posts/first.body | dist/site/posts
-	slurping body dist/meta/posts/first.body \
-          cat dist/meta/posts/first.meta "|" \
-          exporting template templates/post \
-          > dist/site/posts/first.html
+dist/site/posts/%.html: dist/meta/posts/%.meta dist/meta/posts/%.body $(TEMPLATES) | dist/site/posts
+	slurping body $(word 2,$^) \
+	  cat $(word 1,$^) "|" exporting template templates/post > $@
 
-dist/meta/posts/first.meta: posts/first.md dist/meta/posts/first.body | dist/meta/posts
-	metadata posts/first.md > "$@"
-	wordcount < posts/first.md >> "$@"
+dist/meta/posts/%.meta: posts/%.md dist/meta/posts/%.body $(TEMPLATES)
+	metadata $< > $@
+	wordcount < $< >> $@
 
-dist/meta/posts/first.body: posts/first.md | dist/meta/posts
-	content posts/first.md | pandoc > "$@"
+dist/meta/posts/%.body: posts/%.md | dist/meta/posts
+	content $< | markdown > $@
 
 .PHONY: clean
 clean:
