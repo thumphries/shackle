@@ -1,6 +1,6 @@
 <html>
   <head> 
-    <link rel="stylesheet" href="../static/index.css"/>
+    <link rel="stylesheet" href="${root}/static/index.css"/>
   </head>
   <body>
     <h1>${title}</h1>
