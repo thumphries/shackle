@@ -9,5 +9,6 @@
     <div>
       ${body}
     </div>
+    <a href="../">Home</a>
   </body>
 </html>
