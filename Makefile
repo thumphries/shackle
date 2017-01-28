@@ -19,7 +19,7 @@ dist/site/posts/%.html: dist/meta/posts/%.meta dist/meta/posts/%.body $(TEMPLATE
 
 dist/meta/posts/%.meta: posts/%.md dist/meta/posts/%.body
 	metadata $< > $@
-	wordcount < $< >> $@
+	(plain | wordcount) < $< >> $@
 
 dist/meta/posts/%.body: posts/%.md | dist/meta/posts
 	content $< | markdown > $@

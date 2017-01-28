@@ -2,4 +2,4 @@
 
 # Reformat the output to wc
 
-sed 's/<[^>]*>//g' | wc -lw | awk '{print "nlines="$1}{print "nwords="$2}'
+wc -lw | awk '{print "nlines="$1}{print "nwords="$2}'

@@ -1,0 +1,5 @@
+#!/bin/sh
+
+# Remove tags from HTML
+
+sed 's/<[^>]*>//g'
