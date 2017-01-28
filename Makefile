@@ -5,17 +5,23 @@ SHELL=env -i PATH="$(PATH)" /bin/sh
 SITE=dist/site
 META=dist/meta
 TEMPLATES=$(wildcard templates/*)
+STATIC=$(patsubst static/%,$(SITE)/static/%,$(wildcard static/*.css))
+
 POSTS_MD=$(wildcard posts/*.md)
 POSTS_MD_META=$(patsubst posts/%.md, $(META)/posts/%.meta, $(POSTS_MD))
 POSTS_MD_HTML=$(patsubst posts/%.md, $(SITE)/posts/%.html, $(POSTS_MD))
 
 HTML=$(SITE)/index.html $(POSTS_MD_HTML)
 
-all: $(HTML)
+all: $(HTML) $(STATIC)
 
 $(SITE)/index.html: $(META)/posts/index $(POSTS_MD_META)
 	@mkdir -p $(@D)
 	render-index $< > $@
+
+$(SITE)/static/%: static/%
+	@mkdir -p $(@D)
+	cp -rf "$<" "$@"
 
 $(META)/posts/index: $(POSTS_MD_META) $(TEMPLATES)
 	@mkdir -p $(@D)
