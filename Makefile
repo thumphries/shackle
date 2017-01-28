@@ -1,27 +1,33 @@
+SITE=dist/site
+META=dist/meta
 TEMPLATES=$(wildcard templates/*)
 POSTS_MD=$(wildcard posts/*.md)
-POSTS_MD_HTML=$(patsubst posts/%.md, dist/site/posts/%.html, $(POSTS_MD))
+POSTS_MD_META=$(patsubst posts/%.md, $(META)/posts/%.meta, $(POSTS_MD))
+POSTS_MD_HTML=$(patsubst posts/%.md, $(SITE)/posts/%.html, $(POSTS_MD))
 
-all: dist/site/index.html
+all: $(SITE)/index.html $(POSTS_MD_HTML)
 
-dist/site/index.html: $(POSTS_MD_HTML)
+$(SITE)/index.html: $(META)/posts/index $(POSTS_MD_META)
+	@mkdir -p $(@D)
 	echo "Hello, world!" > $@
+	(cut -d' ' -f2 | xargs -I{} sh -c "cat {} | exporting template templates/index-entry") < $< >> $@
 
-dist/site/posts:
-	mkdir -p "$@"
+$(META)/posts/index: $(POSTS_MD_META) $(TEMPLATES)
+	@mkdir -p $(@D)
+	index $(POSTS_MD_META) | sort -nr > $(META)/posts/index
 
-dist/meta/posts:
-	mkdir -p "$@"
+$(SITE)/posts/%.html: $(META)/posts/%.meta $(META)/posts/%.body $(TEMPLATES)
+	@mkdir -p $(@D)
+	slurping body $(word 2,$^) exporting template templates/post < $(word 1,$^) > $@
 
-dist/site/posts/%.html: dist/meta/posts/%.meta dist/meta/posts/%.body $(TEMPLATES) | dist/site/posts
-	slurping body $(word 2,$^) \
-	  cat $(word 1,$^) "|" exporting template templates/post > $@
-
-dist/meta/posts/%.meta: posts/%.md dist/meta/posts/%.body
+$(META)/posts/%.meta: posts/%.md $(META)/posts/%.body
+	@mkdir -p $(@D)
 	metadata $< > $@
 	(plain | wordcount) < $< >> $@
+	echo 'url="$(patsubst %.md,%.html,$(word 1,$^))"' >> $@
 
-dist/meta/posts/%.body: posts/%.md | dist/meta/posts
+$(META)/posts/%.body: posts/%.md
+	@mkdir -p $(@D)
 	content $< | markdown > $@
 
 .PHONY: clean

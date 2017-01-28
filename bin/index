@@ -1,0 +1,5 @@
+#!/bin/sh
+
+# Generate an index file from metadata
+
+for meta in $@; do (exporting echo '"${date}"' "$meta") < $meta; done
