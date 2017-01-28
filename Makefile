@@ -34,7 +34,7 @@ $(SITE)/posts/%.html: $(META)/posts/%.meta $(META)/posts/%.body $(TEMPLATES)
 $(META)/posts/%.meta: posts/%.md $(META)/posts/%.body
 	@mkdir -p $(@D)
 	metadata $< > $@
-	(plain | wordcount) < $< >> $@
+	(plain | wordcount) < $(word 2,$^) >> $@
 	echo 'url="$(patsubst %.md,%.html,$(word 1,$^))"' >> $@
 
 $(META)/posts/%.body: posts/%.md
