@@ -1,3 +1,7 @@
+PATH:=$(pwd)/bin:${PATH}
+SHELL=env -i PATH="$(PATH)" /bin/sh
+.SHELLFLAGS= -ecu
+
 SITE=dist/site
 META=dist/meta
 TEMPLATES=$(wildcard templates/*)

@@ -5,3 +5,9 @@ tags="foo"
 ---
 
 The second post is here! will it be picked up by the build system?
+
+```
+main :: IO ()
+main =
+  foo bar baz
+```
