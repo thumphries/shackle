@@ -1,8 +1,4 @@
 <h1>${title}</h1>
-<p>
-Tags:
-$(IFS=','; for tag in $tags; do echo "<a href=\"tag/$(echo $tag | escape)\">$tag</a>"; done)
-</p>
 $(if [ -n "${nwords+set}" ]; then echo "<p>Words: ${nwords}</p>"; fi)
 $(if [ -n "${nlines+set}" ]; then echo "<p>Lines: ${nlines}</p>"; fi)
 <div>

@@ -1,6 +1,6 @@
 PATH:=$(pwd)/bin:${PATH}
 SHELL=env -i PATH="$(PATH)" /bin/sh
-.SHELLFLAGS= -ecu
+.SHELLFLAGS= -euc
 
 SITE=dist/site
 META=dist/meta
@@ -9,12 +9,13 @@ POSTS_MD=$(wildcard posts/*.md)
 POSTS_MD_META=$(patsubst posts/%.md, $(META)/posts/%.meta, $(POSTS_MD))
 POSTS_MD_HTML=$(patsubst posts/%.md, $(SITE)/posts/%.html, $(POSTS_MD))
 
-all: $(SITE)/index.html $(POSTS_MD_HTML)
+HTML=$(SITE)/index.html $(POSTS_MD_HTML)
+
+all: $(HTML)
 
 $(SITE)/index.html: $(META)/posts/index $(POSTS_MD_META)
 	@mkdir -p $(@D)
-	echo "Hello, world!" > $@
-	(cut -d' ' -f2 | xargs -I{} sh -c "cat {} | exporting template templates/index-entry") < $< >> $@
+	render-index $< > $@
 
 $(META)/posts/index: $(POSTS_MD_META) $(TEMPLATES)
 	@mkdir -p $(@D)
@@ -22,7 +23,7 @@ $(META)/posts/index: $(POSTS_MD_META) $(TEMPLATES)
 
 $(SITE)/posts/%.html: $(META)/posts/%.meta $(META)/posts/%.body $(TEMPLATES)
 	@mkdir -p $(@D)
-	slurping body $(word 2,$^) exporting template templates/post < $(word 1,$^) > $@
+	render-post $(word 1,$^) $(word 2,$^) > $@
 
 $(META)/posts/%.meta: posts/%.md $(META)/posts/%.body
 	@mkdir -p $(@D)

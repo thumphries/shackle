@@ -1,0 +1,4 @@
+<li>
+  <span>${date}</span>
+  <a href="${url}">${title}</a>
+</li>

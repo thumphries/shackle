@@ -1,0 +1,10 @@
+#!/bin/sh -eu
+
+# Render a single post.
+# This is the kind of thing a user would want to modify.
+
+usage() { echo "Usage: $0 METADATA BODY"; exit 1; }
+if [ -z "$1" ]; then usage; fi
+if [ -z "$2" ]; then usage; fi
+
+slurping body $2 exporting template templates/post < $1
