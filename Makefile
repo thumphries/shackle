@@ -17,7 +17,7 @@ dist/site/posts/%.html: dist/meta/posts/%.meta dist/meta/posts/%.body $(TEMPLATE
 	slurping body $(word 2,$^) \
 	  cat $(word 1,$^) "|" exporting template templates/post > $@
 
-dist/meta/posts/%.meta: posts/%.md dist/meta/posts/%.body $(TEMPLATES)
+dist/meta/posts/%.meta: posts/%.md dist/meta/posts/%.body
 	metadata $< > $@
 	wordcount < $< >> $@
 
