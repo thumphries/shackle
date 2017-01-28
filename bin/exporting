@@ -1,4 +1,4 @@
-#!/bin/sh
+#!/bin/sh -eu
 
 # Source and export all metadata from stdin.
 

@@ -1,4 +1,4 @@
-#!/bin/sh
+#!/bin/sh -eu
 
 # Split out all the file's metadata.
 

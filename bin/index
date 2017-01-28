@@ -1,4 +1,4 @@
-#!/bin/sh
+#!/bin/sh -eu
 
 # Generate an index file from metadata
 

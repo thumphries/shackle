@@ -1,4 +1,4 @@
-#!/bin/sh
+#!/bin/sh -eu
 
 # Reformat the output to wc
 
