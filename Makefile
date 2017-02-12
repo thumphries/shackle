@@ -36,7 +36,6 @@ $(META)/posts/%.meta: posts/%.md $(META)/posts/%.body
 	metadata $< > $@
 	(plain | wordcount) < $(word 2,$^) >> $@
 	echo 'url="$(patsubst %.md,%.html,$(word 1,$^))"' >> $@
-	echo 'root=".."' >> $@
 
 $(META)/posts/%.body: posts/%.md
 	@mkdir -p $(@D)

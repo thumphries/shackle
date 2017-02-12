@@ -5,9 +5,6 @@
 usage() { echo "Usage: $0 POST_INDEX"; exit 1; }
 if [ -z "$1" ]; then usage; fi
 
-index_root=
-export index_root
-
 posts=$(cat "$1" | cut -d' ' -f2 | xargs -I{} sh -c "cat {} | exporting template templates/index-entry")
 export posts
 
